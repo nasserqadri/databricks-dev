@@ -1,2 +1,2 @@
-# databricks-notebook-f1
+# databricks-f1
 Databricks git for f1 project
