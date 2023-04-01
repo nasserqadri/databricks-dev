@@ -20,6 +20,7 @@ display(dbutils.fs.mounts())
 # COMMAND ----------
 
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType
+from pyspark.sql.functions import col
 
 # COMMAND ----------
 
@@ -47,4 +48,35 @@ display(circuits_df)
 
 # COMMAND ----------
 
+# MAGIC %md 
+# MAGIC ### Select only the required columns
 
+# COMMAND ----------
+
+circuits_selected_df = circuits_df.select(col("circuitId"), 
+                                          col("circuitRef"), 
+                                          col("name"), 
+                                          col('location'),
+                                          col('country'),
+                                          col('lat'),
+                                          col('lng'),
+                                          col('alt')
+                                         )
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC 
+# MAGIC ### Rename the columns
+
+# COMMAND ----------
+
+circuits_renamed_df = circuits_selected_df.withColumnRenamed("circuitId", "circuit_id") \
+.withColumnRenamed("circuitRef", "circuit_ref") \
+.withColumnRenamed("lat", "latitude") \
+.withColumnRenamed("lng", "longitude") \
+.withColumnRenamed("alt", "altitude")
+
+# COMMAND ----------
+
+display(circuits_renamed_df)
